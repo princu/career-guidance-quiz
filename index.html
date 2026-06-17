@@ -1,0 +1,4675 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Career Guidance Quiz</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #65717d;
+      --line: #d9e0e7;
+      --paper: #f8fafb;
+      --white: #ffffff;
+      --teal: #0f766e;
+      --teal-soft: #d9f3ef;
+      --coral: #d85b4a;
+      --yellow: #f4bf45;
+      --blue: #3366cc;
+      --green: #2d8a54;
+      --shadow: 0 18px 50px rgba(23, 33, 43, .12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(120deg, rgba(15, 118, 110, .10), transparent 30%),
+        linear-gradient(250deg, rgba(216, 91, 74, .09), transparent 32%),
+        var(--paper);
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(280px, 390px) 1fr;
+    }
+
+    .side {
+      min-height: 100vh;
+      padding: 30px;
+      color: #f8ffff;
+      background:
+        linear-gradient(rgba(15, 39, 45, .45), rgba(15, 39, 45, .70)),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='1200' viewBox='0 0 900 1200'%3E%3Crect width='900' height='1200' fill='%230f766e'/%3E%3Ccircle cx='150' cy='180' r='105' fill='%23f4bf45' opacity='.78'/%3E%3Ccircle cx='760' cy='260' r='145' fill='%23d85b4a' opacity='.78'/%3E%3Cpath d='M70 690 C210 560 360 760 510 620 S760 500 870 650 L870 1200 L70 1200 Z' fill='%2317212b' opacity='.34'/%3E%3Cpath d='M0 835 C170 755 290 905 445 800 S720 670 900 830 L900 1200 L0 1200 Z' fill='%23ffffff' opacity='.14'/%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='12' stroke-linecap='round' opacity='.68'%3E%3Cpath d='M250 360 h155 v120 h-155z'/%3E%3Cpath d='M327 360 v-42'/%3E%3Cpath d='M222 530 h210'/%3E%3Cpath d='M210 590 h165'/%3E%3Cpath d='M560 330 l92 54 -92 54 -92 -54z'/%3E%3Cpath d='M652 384 v90'/%3E%3Cpath d='M498 505 h125'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .18);
+      border: 1px solid rgba(255, 255, 255, .24);
+      backdrop-filter: blur(8px);
+    }
+
+    .side h1 {
+      margin: 0;
+      max-width: 10ch;
+      font-size: clamp(42px, 6vw, 76px);
+      line-height: .94;
+      letter-spacing: 0;
+    }
+
+    .side p {
+      margin: 18px 0 0;
+      max-width: 33ch;
+      color: rgba(248, 255, 255, .82);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    .mini-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .mini-stat {
+      min-height: 76px;
+      padding: 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .15);
+      border: 1px solid rgba(255, 255, 255, .20);
+      backdrop-filter: blur(8px);
+    }
+
+    .mini-stat strong {
+      display: block;
+      font-size: 22px;
+    }
+
+    .mini-stat span {
+      display: block;
+      color: rgba(248, 255, 255, .75);
+      font-size: 12px;
+      line-height: 1.25;
+    }
+
+    .main {
+      padding: 28px;
+      display: grid;
+      align-items: center;
+    }
+
+    .panel {
+      width: min(860px, 100%);
+      margin: 0 auto;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(217, 224, 231, .82);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .topbar {
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, .72);
+    }
+
+    .progress-shell {
+      height: 10px;
+      background: #e7edf2;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--teal), var(--yellow), var(--coral));
+      transition: width .28s ease;
+    }
+
+    .counter {
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .quiz {
+      padding: 30px;
+    }
+
+    .student-start {
+      padding: 30px;
+    }
+
+    .student-form {
+      margin-top: 24px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .field input {
+      width: 100%;
+      min-height: 48px;
+      padding: 0 14px;
+      color: var(--ink);
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .field input:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, .12);
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--teal);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .question {
+      margin: 0;
+      font-size: clamp(24px, 3vw, 38px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .options {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .option {
+      min-height: 96px;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      align-items: start;
+      text-align: left;
+      color: var(--ink);
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform .18s ease, border .18s ease, box-shadow .18s ease;
+    }
+
+    .option:hover {
+      transform: translateY(-2px);
+      border-color: rgba(15, 118, 110, .45);
+      box-shadow: 0 12px 24px rgba(23, 33, 43, .09);
+    }
+
+    .option.selected {
+      border-color: var(--teal);
+      background: var(--teal-soft);
+    }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      color: var(--teal);
+      background: #eef7f5;
+      border-radius: 8px;
+    }
+
+    .option strong {
+      display: block;
+      font-size: 16px;
+      line-height: 1.25;
+    }
+
+    .option span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.38;
+    }
+
+    .actions {
+      margin-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .btn {
+      min-height: 46px;
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--ink);
+      background: #edf2f5;
+    }
+
+    .btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .btn.primary {
+      color: #fff;
+      background: var(--teal);
+    }
+
+    .btn:disabled {
+      cursor: not-allowed;
+      opacity: .45;
+    }
+
+    .results {
+      display: none;
+      padding: 30px;
+    }
+
+    .results.active {
+      display: block;
+    }
+
+    .quiz.hidden, .topbar.hidden, .student-start.hidden {
+      display: none;
+    }
+
+    .result-hero {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .result-title {
+      padding: 22px;
+      border-radius: 8px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e, #2450a4);
+    }
+
+    .result-title h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .result-title p {
+      margin: 14px 0 0;
+      color: rgba(255, 255, 255, .84);
+      line-height: 1.5;
+    }
+
+    .student-result {
+      margin: 0 0 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: rgba(255, 255, 255, .88);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .score-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .score-row {
+      margin-top: 14px;
+    }
+
+    .score-row:first-child {
+      margin-top: 0;
+    }
+
+    .score-row span {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .bar {
+      margin-top: 6px;
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #edf2f5;
+    }
+
+    .bar i {
+      display: block;
+      height: 100%;
+      width: var(--w);
+      border-radius: inherit;
+      background: var(--c);
+    }
+
+    .clusters {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .cluster {
+      padding: 16px;
+      min-height: 190px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .cluster .icon {
+      color: var(--cluster-color);
+      background: #f1f6f6;
+    }
+
+    .cluster h3 {
+      margin: 14px 0 8px;
+      font-size: 17px;
+      line-height: 1.18;
+    }
+
+    .cluster p, .cluster li {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .cluster ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+
+    .next-steps {
+      margin-top: 18px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .next-steps h3 {
+      margin: 0 0 12px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .step {
+      padding: 14px;
+      min-height: 104px;
+      border-radius: 8px;
+      background: #f5f8fa;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    @media (max-width: 880px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .side {
+        min-height: auto;
+        padding: 24px;
+      }
+
+      .side h1 {
+        max-width: 12ch;
+        font-size: 44px;
+      }
+
+      .main {
+        padding: 16px;
+      }
+
+      .result-hero, .clusters {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .mini-stats, .options {
+        grid-template-columns: 1fr;
+      }
+
+      .quiz, .results {
+        padding: 20px;
+      }
+
+      .option {
+        min-height: 84px;
+      }
+
+      .actions {
+        flex-direction: column-reverse;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="app">
+    <aside class="side">
+      <div>
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m12 2 8 4-8 4-8-4 8-4Z"></path>
+              <path d="M4 10v6l8 4 8-4v-6"></path>
+              <path d="M12 10v10"></path>
+            </svg>
+          </div>
+          <span>Career Guidance Quiz</span>
+        </div>
+        <h1>Find your direction.</h1>
+        <p>For Class 12 students choosing courses, entrance paths, and career clusters after school.</p>
+      </div>
+      <div class="mini-stats" aria-label="Quiz details">
+        <div class="mini-stat"><strong>120</strong><span>focused choices</span></div>
+        <div class="mini-stat"><strong>24</strong><span>career clusters</span></div>
+        <div class="mini-stat"><strong>3</strong><span>top matches</span></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section class="panel" aria-live="polite">
+        <div class="topbar hidden" id="topbar">
+          <div class="progress-shell" aria-hidden="true"><div class="progress" id="progress"></div></div>
+          <div class="counter" id="counter">1 / 120</div>
+        </div>
+
+        <div class="student-start" id="studentStart">
+          <p class="eyebrow">Student Details</p>
+          <h2 class="question">Enter student details to begin.</h2>
+          <form class="student-form" id="studentForm">
+            <div class="field">
+              <label for="studentName">Student Name</label>
+              <input id="studentName" name="studentName" type="text" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="studentClass">Class</label>
+              <input id="studentClass" name="studentClass" type="text" autocomplete="off" required>
+            </div>
+            <div class="actions">
+              <span></span>
+              <button class="btn primary" type="submit">
+                Start Quiz
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="quiz hidden" id="quiz">
+          <p class="eyebrow" id="sectionName">Question</p>
+          <h2 class="question" id="questionText"></h2>
+          <div class="options" id="options"></div>
+          <div class="actions">
+            <button class="btn" id="backBtn" type="button" aria-label="Previous question">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m15 18-6-6 6-6"></path>
+              </svg>
+              Back
+            </button>
+            <button class="btn primary" id="nextBtn" type="button" disabled>
+              Next
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="results" id="results"></div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const clusters = {
+      engineering: {
+        title: "Engineering",
+        color: "#3366cc",
+        icon: "cpu",
+        summary: "Best for students who enjoy physics, maths, machines, systems, and solving practical technical problems.",
+        paths: ["Mechanical", "Civil", "Electrical", "Electronics"]
+      },
+      medical: {
+        title: "Medical",
+        color: "#d85b4a",
+        icon: "heart",
+        summary: "Best for students who like biology, patient care, diagnosis, health, and long professional training.",
+        paths: ["MBBS", "Dentistry", "Nursing", "Physiotherapy"]
+      },
+      computerScience: {
+        title: "Computer Science",
+        color: "#2450a4",
+        icon: "cpu",
+        summary: "Best for students who enjoy coding, logic, apps, software systems, AI, and digital problem solving.",
+        paths: ["Software engineering", "AI/ML", "Cybersecurity", "Data science"]
+      },
+      research: {
+        title: "Research",
+        color: "#2d8a54",
+        icon: "book",
+        summary: "Best for students who enjoy deep study, experiments, analysis, discovery, and academic exploration.",
+        paths: ["Pure sciences", "Applied research", "Academia", "R&D labs"]
+      },
+      architecture: {
+        title: "Architecture",
+        color: "#e08b2f",
+        icon: "pen",
+        summary: "Best for students who enjoy design, buildings, spaces, drawing, maths, and practical creativity.",
+        paths: ["Architecture", "Urban design", "Interior architecture", "Planning"]
+      },
+      biotechnology: {
+        title: "Biotechnology",
+        color: "#0f766e",
+        icon: "heart",
+        summary: "Best for students who like biology, labs, innovation, genetics, medicine, food, and life sciences.",
+        paths: ["Genetics", "Bioinformatics", "Pharma research", "Food technology"]
+      },
+      defenceAviation: {
+        title: "Defence & Aviation",
+        color: "#5b6b36",
+        icon: "rocket",
+        summary: "Best for students who value discipline, fitness, technology, service, aircraft, and national security.",
+        paths: ["Armed forces", "Pilot training", "Aerospace", "Aviation management"]
+      },
+      environmentalScience: {
+        title: "Environmental Science",
+        color: "#2d8a54",
+        icon: "tool",
+        summary: "Best for students who care about nature, climate, sustainability, fieldwork, and scientific impact.",
+        paths: ["Environmental science", "Climate studies", "Conservation", "Sustainability"]
+      },
+      financeAccounting: {
+        title: "Finance & Accounting",
+        color: "#0f766e",
+        icon: "chart",
+        summary: "Best for students who like accounts, numbers, audits, taxation, budgets, and financial discipline.",
+        paths: ["CA", "CMA", "Accounting", "Corporate finance"]
+      },
+      banking: {
+        title: "Banking",
+        color: "#3366cc",
+        icon: "chart",
+        summary: "Best for students who like financial services, customer trust, operations, loans, and stable institutions.",
+        paths: ["Retail banking", "Credit", "Risk", "Bank operations"]
+      },
+      management: {
+        title: "Management",
+        color: "#6d4bc2",
+        icon: "users",
+        summary: "Best for students who like teams, planning, leadership, operations, strategy, and decision making.",
+        paths: ["BBA", "MBA", "Operations", "Human resources"]
+      },
+      entrepreneurship: {
+        title: "Entrepreneurship",
+        color: "#b4492f",
+        icon: "rocket",
+        summary: "Best for students who like initiative, uncertainty, selling, product ideas, and building ventures.",
+        paths: ["Startups", "Family business", "Digital business", "Product management"]
+      },
+      marketing: {
+        title: "Marketing",
+        color: "#c23f73",
+        icon: "mic",
+        summary: "Best for students who enjoy brands, customers, communication, persuasion, content, and market trends.",
+        paths: ["Digital marketing", "Brand management", "Sales", "Advertising"]
+      },
+      economics: {
+        title: "Economics",
+        color: "#2450a4",
+        icon: "book",
+        summary: "Best for students who like policy, markets, data, trade-offs, development, and analytical thinking.",
+        paths: ["Economics", "Policy analysis", "Development studies", "Analytics"]
+      },
+      investments: {
+        title: "Investments",
+        color: "#0f766e",
+        icon: "chart",
+        summary: "Best for students who follow markets, risk, wealth creation, portfolios, valuation, and business news.",
+        paths: ["Investment analysis", "Wealth management", "Equity research", "Trading"]
+      },
+      internationalBusiness: {
+        title: "International Business",
+        color: "#e08b2f",
+        icon: "rocket",
+        summary: "Best for students who enjoy global trade, cultures, logistics, strategy, and cross-border commerce.",
+        paths: ["Global business", "Import-export", "Logistics", "International marketing"]
+      },
+      psychology: {
+        title: "Psychology",
+        color: "#2d8a54",
+        icon: "users",
+        summary: "Best for students who are curious about behavior, emotions, mental health, counselling, and human development.",
+        paths: ["Clinical psychology", "Counselling", "Organizational psychology", "Research"]
+      },
+      law: {
+        title: "Law",
+        color: "#6d4bc2",
+        icon: "scale",
+        summary: "Best for students who enjoy debate, reading, rules, rights, evidence, and structured argument.",
+        paths: ["Corporate law", "Criminal law", "Constitutional law", "Legal policy"]
+      },
+      journalism: {
+        title: "Journalism",
+        color: "#c23f73",
+        icon: "mic",
+        summary: "Best for students who like news, writing, interviews, current affairs, media, and public communication.",
+        paths: ["Journalism", "Broadcast media", "Digital media", "Content reporting"]
+      },
+      civilServices: {
+        title: "Civil Services",
+        color: "#5b6b36",
+        icon: "scale",
+        summary: "Best for students who care about governance, public service, policy, administration, and national issues.",
+        paths: ["UPSC", "State services", "Public administration", "Policy roles"]
+      },
+      design: {
+        title: "Design",
+        color: "#e08b2f",
+        icon: "pen",
+        summary: "Best for students who like visual thinking, products, interfaces, fashion, animation, and creative problem solving.",
+        paths: ["Graphic design", "UX design", "Fashion design", "Animation"]
+      },
+      literature: {
+        title: "Literature",
+        color: "#2450a4",
+        icon: "book",
+        summary: "Best for students who love reading, writing, languages, interpretation, culture, and expressive communication.",
+        paths: ["English literature", "Creative writing", "Publishing", "Editing"]
+      },
+      socialWork: {
+        title: "Social Work",
+        color: "#2d8a54",
+        icon: "users",
+        summary: "Best for students who want community impact, field engagement, advocacy, welfare, and people-centered work.",
+        paths: ["Social work", "NGO management", "Community development", "Public health"]
+      },
+      teaching: {
+        title: "Teaching",
+        color: "#3366cc",
+        icon: "book",
+        summary: "Best for students who enjoy explaining ideas, mentoring, patience, subject depth, and classroom leadership.",
+        paths: ["School teaching", "Higher education", "EdTech", "Training"]
+      }
+    };
+
+    const questions = [
+      {
+            "section": "Question",
+            "text": "I would enjoy designing a machine, bridge, circuit, vehicle, or technical system.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "engineering": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "engineering": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "engineering": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "engineering": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy studying human behaviour, emotions, personality, and mental health.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "psychology": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "psychology": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "psychology": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "psychology": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy preparing accounts, balance sheets, tax records, or audit reports.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "financeAccounting": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "financeAccounting": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "financeAccounting": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "financeAccounting": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy designing logos, posters, products, fashion, interiors, or app screens.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "design": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "design": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "design": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "design": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy learning how doctors diagnose symptoms and choose treatments.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "medical": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "medical": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "medical": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "medical": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy working with savings accounts, loans, credit, and financial services.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "banking": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "banking": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "banking": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "banking": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy studying legal cases, rights, evidence, contracts, and court arguments.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "law": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "law": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "law": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "law": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy creating software, apps, websites, games, or automation tools.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "computerScience": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "computerScience": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "computerScience": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "computerScience": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy leading teams, planning projects, and improving business operations.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "management": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "management": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "management": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "management": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy reporting news, interviewing people, and explaining current events.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "journalism": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "journalism": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "journalism": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "journalism": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy working in a lab or academic setting to discover new knowledge.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "research": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "research": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "research": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "research": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy starting a business, testing demand, and building something of my own.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "entrepreneurship": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "entrepreneurship": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "entrepreneurship": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "entrepreneurship": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy preparing for public administration, governance, and policy-making roles.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "civilServices": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "civilServices": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "civilServices": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "civilServices": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy designing homes, schools, offices, public spaces, or city layouts.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "architecture": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "architecture": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "architecture": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "architecture": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy creating campaigns that make people notice and choose a product.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "marketing": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "marketing": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "marketing": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "marketing": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy studying novels, poems, plays, essays, language, and culture.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "literature": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "literature": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "literature": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "literature": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy studying cells, genes, microbes, enzymes, or biological processes.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "biotechnology": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "biotechnology": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "biotechnology": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "biotechnology": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy studying inflation, unemployment, markets, trade, growth, or public policy.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "economics": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "economics": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "economics": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "economics": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy working with communities, NGOs, welfare programs, or development projects.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "socialWork": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "socialWork": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "socialWork": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "socialWork": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy a career involving aircraft, defence technology, discipline, and service.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "defenceAviation": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "defenceAviation": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "defenceAviation": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "defenceAviation": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy analysing stocks, mutual funds, portfolios, and financial markets.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "investments": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "investments": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "investments": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "investments": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy teaching students and helping them understand difficult topics.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "teaching": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "teaching": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "teaching": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "teaching": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy working on climate change, pollution control, wildlife, or conservation.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "environmentalScience": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "environmentalScience": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "environmentalScience": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "environmentalScience": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy working with import-export, global trade, logistics, or international markets.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "internationalBusiness": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "internationalBusiness": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "internationalBusiness": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "internationalBusiness": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I like solving practical problems using physics, maths, measurements, and diagrams.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "engineering": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "engineering": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "engineering": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "engineering": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am interested in counselling, therapy, child development, or workplace psychology.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "psychology": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "psychology": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "psychology": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "psychology": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I like working with exact numbers, financial statements, and organized records.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "financeAccounting": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "financeAccounting": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "financeAccounting": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "financeAccounting": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I like turning rough ideas into sketches, layouts, visuals, or prototypes.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "design": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "design": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "design": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "design": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am interested in patient care, hospitals, medicines, anatomy, and health science.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "medical": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "medical": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "medical": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "medical": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am interested in how banks decide eligibility, risk, interest, and customer needs.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "banking": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "banking": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "banking": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "banking": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I like debating issues and proving a point using facts and rules.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "law": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "law": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "law": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "law": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I like breaking a problem into logical steps that a computer can follow.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "computerScience": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "computerScience": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "computerScience": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "computerScience": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I like assigning tasks, tracking progress, and solving coordination problems.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "management": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "management": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "management": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "management": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I like writing articles, scripts, captions, or stories for public audiences.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "journalism": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "journalism": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "journalism": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "journalism": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I like reading deeply, forming hypotheses, and checking evidence carefully.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "research": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "research": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "research": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "research": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I like identifying problems that could become product or service ideas.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "entrepreneurship": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "entrepreneurship": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "entrepreneurship": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "entrepreneurship": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am interested in current affairs, polity, history, geography, and social issues.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "civilServices": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "civilServices": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "civilServices": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "civilServices": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I like combining drawing, measurements, materials, and human needs in one plan.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "architecture": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "architecture": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "architecture": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "architecture": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am interested in branding, advertising, social media, sales, and customer psychology.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "marketing": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "marketing": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "marketing": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "marketing": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I like writing, editing, translating, reviewing, or interpreting texts.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "literature": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "literature": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "literature": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "literature": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am interested in lab work connected to medicines, food, agriculture, or genetics.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "biotechnology": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "biotechnology": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "biotechnology": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "biotechnology": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I like using data and logic to understand why economies behave differently.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "economics": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "economics": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "economics": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "economics": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am interested in issues like poverty, education, gender, health, rights, or inclusion.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "socialWork": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "socialWork": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "socialWork": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "socialWork": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am interested in becoming a pilot, joining defence services, or working in aviation.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "defenceAviation": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "defenceAviation": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "defenceAviation": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "defenceAviation": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am interested in how investors compare risk, return, valuation, and timing.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "investments": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "investments": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "investments": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "investments": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I like preparing notes, examples, activities, or lesson plans.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "teaching": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "teaching": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "teaching": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "teaching": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am interested in testing water, soil, air, waste, or biodiversity problems.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "environmentalScience": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "environmentalScience": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "environmentalScience": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "environmentalScience": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am interested in how companies sell products across countries and cultures.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "internationalBusiness": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "internationalBusiness": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "internationalBusiness": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "internationalBusiness": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would be interested in testing why a device, structure, or mechanism failed.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "engineering": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "engineering": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "engineering": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "engineering": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I listen carefully when people share personal problems or emotional struggles.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "psychology": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "psychology": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "psychology": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "psychology": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am interested in careers like CA, CMA, taxation, auditing, or corporate finance.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "financeAccounting": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "financeAccounting": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "financeAccounting": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "financeAccounting": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I notice color, typography, packaging, clothing, interfaces, and user experience.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "design": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "design": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "design": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "design": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can handle long study hours if the goal is to treat or heal people.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "medical": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "medical": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "medical": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "medical": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would like a stable professional role in a bank or financial institution.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "banking": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "banking": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "banking": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "banking": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am interested in justice, public issues, legal reasoning, and constitutional rights.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "law": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "law": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "law": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "law": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am interested in coding, artificial intelligence, cybersecurity, or data systems.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "computerScience": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "computerScience": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "computerScience": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "computerScience": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am interested in careers in HR, operations, consulting, administration, or business leadership.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "management": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "management": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "management": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "management": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am interested in media, digital news, documentaries, podcasts, or public communication.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "journalism": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "journalism": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "journalism": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "journalism": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would be interested in designing experiments and documenting results.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "research": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "research": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "research": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "research": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am willing to take calculated risks and learn from failed attempts.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "entrepreneurship": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "entrepreneurship": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "entrepreneurship": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "entrepreneurship": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would like a career where decisions affect districts, departments, or public welfare.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "civilServices": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "civilServices": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "civilServices": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "civilServices": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I notice how buildings look, how rooms are arranged, and how spaces feel.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "architecture": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "architecture": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "architecture": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "architecture": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I like understanding why people buy certain products and ignore others.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "marketing": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "marketing": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "marketing": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "marketing": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am interested in publishing, creative writing, content editing, or literary research.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "literature": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "literature": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "literature": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "literature": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would like to learn how biology can create new products or treatments.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "biotechnology": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "biotechnology": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "biotechnology": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "biotechnology": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am interested in how government decisions affect people, businesses, and prices.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "economics": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "economics": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "economics": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "economics": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would like fieldwork where I meet people and understand their real challenges.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "socialWork": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "socialWork": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "socialWork": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "socialWork": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can handle strict training, physical standards, rules, and high responsibility.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "defenceAviation": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "defenceAviation": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "defenceAviation": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "defenceAviation": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I like tracking business news and understanding why market prices move.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "investments": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "investments": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "investments": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "investments": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can be patient when someone needs repeated explanation or encouragement.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "teaching": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "teaching": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "teaching": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "teaching": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would like a career involving sustainability projects or environmental impact studies.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "environmentalScience": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "environmentalScience": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "environmentalScience": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "environmentalScience": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would like to learn about foreign markets, currencies, shipping, and trade rules.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "internationalBusiness": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "internationalBusiness": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "internationalBusiness": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "internationalBusiness": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can imagine working on construction sites, factories, workshops, or technical design teams.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "engineering": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "engineering": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "engineering": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "engineering": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would like to understand why people form habits, fears, conflicts, or motivations.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "psychology": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "psychology": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "psychology": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "psychology": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can patiently check calculations and find small financial errors.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "financeAccounting": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "financeAccounting": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "financeAccounting": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "financeAccounting": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy building a portfolio and improving designs after feedback.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "design": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "design": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "design": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "design": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would like to understand medical reports, diseases, surgeries, or emergency care.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "medical": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "medical": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "medical": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "medical": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can handle rules, documentation, customer trust, and money-related responsibility.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "banking": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "banking": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "banking": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "banking": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy reading detailed documents to find the strongest argument.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "law": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "law": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "law": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "law": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy debugging errors until a program works correctly.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "computerScience": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "computerScience": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "computerScience": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "computerScience": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy studying case studies about companies and management decisions.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "management": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "management": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "management": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "management": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy investigating a local issue and presenting it clearly.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "journalism": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "journalism": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "journalism": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "journalism": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can stay patient with a question even when the answer takes months or years.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "research": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "research": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "research": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "research": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy pitching ideas, finding customers, and improving a business model.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "entrepreneurship": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "entrepreneurship": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "entrepreneurship": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "entrepreneurship": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can stay consistent for a long and difficult competitive exam preparation journey.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "civilServices": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "civilServices": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "civilServices": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "civilServices": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy preparing floor plans, models, layouts, or design presentations.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "architecture": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "architecture": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "architecture": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "architecture": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy planning content, promotions, launches, or influencer campaigns.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "marketing": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "marketing": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "marketing": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "marketing": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can spend time understanding meaning, character, tone, and expression in writing.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "literature": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "literature": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "literature": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "literature": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can follow precise lab procedures and safety rules with patience.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "biotechnology": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "biotechnology": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "biotechnology": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "biotechnology": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy analysing economic reports, graphs, budgets, or development issues.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "economics": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "economics": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "economics": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "economics": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can listen respectfully to people from different backgrounds and situations.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "socialWork": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "socialWork": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "socialWork": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "socialWork": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy learning about aircraft systems, navigation, security, or aerospace operations.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "defenceAviation": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "defenceAviation": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "defenceAviation": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "defenceAviation": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy building and monitoring an investment portfolio over time.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "investments": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "investments": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "investments": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "investments": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I am interested in schools, colleges, coaching, EdTech, or academic training.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "teaching": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "teaching": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "teaching": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "teaching": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can imagine doing field visits, collecting samples, and analysing environmental data.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "environmentalScience": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "environmentalScience": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "environmentalScience": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "environmentalScience": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can imagine communicating with clients or teams from different countries.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "internationalBusiness": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "internationalBusiness": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "internationalBusiness": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "internationalBusiness": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy improving how engines, electronics, machines, or infrastructure perform.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "engineering": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "engineering": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "engineering": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "engineering": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can imagine helping people through assessment, counselling, research, or guidance.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "psychology": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "psychology": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "psychology": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "psychology": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy helping a business understand profit, cost, tax, and compliance.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "financeAccounting": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "financeAccounting": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "financeAccounting": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "financeAccounting": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can imagine solving real problems through visual, product, or digital design.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "design": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "design": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "design": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "design": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I feel motivated by careers where health decisions directly affect people's lives.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "medical": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "medical": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "medical": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "medical": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy guiding people on suitable banking or credit products.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "banking": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "banking": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "banking": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "banking": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can imagine working as an advocate, legal advisor, corporate lawyer, or policy lawyer.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "law": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "law": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "law": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "law": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can imagine building digital products used by students, companies, or customers.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "computerScience": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "computerScience": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "computerScience": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "computerScience": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can imagine taking responsibility for targets, people, resources, and results.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "management": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "management": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "management": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "management": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can imagine working with deadlines in a newsroom, media house, or content platform.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "journalism": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "journalism": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "journalism": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "journalism": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy contributing to scientific papers, innovation projects, or R&D work.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "research": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "research": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "research": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "research": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can imagine creating income through a startup, family business, or digital venture.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "entrepreneurship": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "entrepreneurship": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "entrepreneurship": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "entrepreneurship": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I feel motivated by roles involving authority, responsibility, service, and administration.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "civilServices": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "civilServices": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "civilServices": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "civilServices": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can imagine improving spaces so they are useful, safe, and visually strong.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "architecture": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "architecture": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "architecture": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "architecture": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can imagine working with creative teams to grow a brand or business.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "marketing": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "marketing": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "marketing": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "marketing": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy careers where strong language and deep reading are important.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "literature": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "literature": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "literature": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "literature": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy careers involving genetic testing, pharma research, or bio-based innovation.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "biotechnology": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "biotechnology": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "biotechnology": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "biotechnology": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can imagine working in policy research, analytics, development, or economic consulting.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "economics": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "economics": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "economics": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "economics": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I feel motivated by careers that create visible social change.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "socialWork": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "socialWork": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "socialWork": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "socialWork": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I feel motivated by careers linked to national service, courage, and quick decisions.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "defenceAviation": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "defenceAviation": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "defenceAviation": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "defenceAviation": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I can imagine careers in wealth management, equity research, trading, or investment analysis.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "investments": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "investments": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "investments": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "investments": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I feel satisfied when someone learns or improves because of my guidance.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "teaching": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "teaching": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "teaching": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "teaching": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I feel motivated by solving real problems related to nature and resource protection.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "environmentalScience": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "environmentalScience": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "environmentalScience": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "environmentalScience": 0
+                        }
+                  ]
+            ]
+      },
+      {
+            "section": "Question",
+            "text": "I would enjoy planning how an Indian product could succeed in another country.",
+            "options": [
+                  [
+                        "Strongly agree",
+                        {
+                              "internationalBusiness": 3
+                        }
+                  ],
+                  [
+                        "Agree",
+                        {
+                              "internationalBusiness": 2
+                        }
+                  ],
+                  [
+                        "Not sure",
+                        {
+                              "internationalBusiness": 1
+                        }
+                  ],
+                  [
+                        "Not interested",
+                        {
+                              "internationalBusiness": 0
+                        }
+                  ]
+            ]
+      }
+]
+        .map((question) => ({
+          ...question,
+          options: question.options.map(([label, scores]) => [label, scores])
+        }));
+
+    const icons = {
+      cpu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="2"></rect><path d="M4 9h3M4 15h3M17 9h3M17 15h3M9 4v3M15 4v3M9 17v3M15 17v3"></path></svg>',
+      heart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"></path></svg>',
+      chart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="m7 15 4-4 3 3 5-7"></path></svg>',
+      scale: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 6h14M6 6l-3 7h6L6 6ZM18 6l-3 7h6l-3-7Z"></path></svg>',
+      pen: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19 7-7 3 3-7 7-3-3Z"></path><path d="m18 13-7-7 2-2 7 7"></path><path d="M2 22h8"></path></svg>',
+      users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-8 0v2"></path><circle cx="12" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg>',
+      mic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"></path></svg>',
+      book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15Z"></path></svg>',
+      rocket: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1 1-1.5 3-1.5 4.5 1.5 0 3.5-.5 4.5-1.5"></path><path d="M9 15 4 10l5-1 6-6c2.5-.6 4.5-.2 6 1.3 1.5 1.5 1.9 3.5 1.3 6l-6 6-1 5-5-5"></path><path d="M15 9h.01"></path></svg>',
+      tool: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5 5L3 18l3 3 6.7-6.7a4 4 0 0 0 5-5l-2.9 2.9-2.1-2.1 2.9-2.9Z"></path></svg>'
+    };
+
+    const optionIcons = ["cpu", "heart", "chart", "pen"];
+    const SUPABASE_URL = "https://quplzqzfjvawkraguwxt.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_W20fYs7WLBMPEebQtIXYxg_95HBgOS2";
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+    let current = 0;
+    let studentData = null;
+    let submissionId = null;
+    let lastSavedAt = "";
+    let lastSaveStatus = "saved on this device";
+    const answers = Array(questions.length).fill(null);
+
+    const studentStart = document.getElementById("studentStart");
+    const studentForm = document.getElementById("studentForm");
+    const studentName = document.getElementById("studentName");
+    const studentClass = document.getElementById("studentClass");
+    const sectionName = document.getElementById("sectionName");
+    const questionText = document.getElementById("questionText");
+    const optionsEl = document.getElementById("options");
+    const nextBtn = document.getElementById("nextBtn");
+    const backBtn = document.getElementById("backBtn");
+    const progress = document.getElementById("progress");
+    const counter = document.getElementById("counter");
+    const quiz = document.getElementById("quiz");
+    const topbar = document.getElementById("topbar");
+    const results = document.getElementById("results");
+
+    function renderQuestion() {
+      const q = questions[current];
+      sectionName.textContent = "Question";
+      questionText.textContent = q.text;
+      counter.textContent = `${current + 1} / ${questions.length}`;
+      progress.style.width = `${(current / questions.length) * 100}%`;
+      backBtn.disabled = current === 0;
+      nextBtn.disabled = answers[current] === null;
+      nextBtn.innerHTML = current === questions.length - 1
+        ? 'See results <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 5 7 7-7 7"></path></svg>'
+        : 'Next <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>';
+      optionsEl.innerHTML = q.options.map((option, index) => {
+        const [label] = option;
+        const selected = answers[current] === index ? " selected" : "";
+        return `<button class="option${selected}" type="button" data-index="${index}">
+          <span class="icon" aria-hidden="true">${icons[optionIcons[index]]}</span>
+          <span><strong>${label}</strong></span>
+        </button>`;
+      }).join("");
+    }
+
+    function calculateScores() {
+      const totals = Object.fromEntries(Object.keys(clusters).map(key => [key, 0]));
+      answers.forEach((answer, questionIndex) => {
+        if (answer === null) return;
+        const scores = questions[questionIndex].options[answer][1];
+        Object.entries(scores).forEach(([key, value]) => totals[key] += value);
+      });
+      return Object.entries(totals).sort((a, b) => b[1] - a[1]);
+    }
+
+    function calculateSharePercentages(entries) {
+      const total = entries.reduce((sum, [, score]) => sum + score, 0);
+      if (!total) {
+        const equal = Math.floor(100 / entries.length);
+        const percentages = entries.map(() => equal);
+        percentages[0] += 100 - percentages.reduce((sum, value) => sum + value, 0);
+        return percentages;
+      }
+
+      const raw = entries.map(([, score]) => (score / total) * 100);
+      const percentages = raw.map(Math.floor);
+      let remaining = 100 - percentages.reduce((sum, value) => sum + value, 0);
+      const order = raw
+        .map((value, index) => ({ index, fraction: value - Math.floor(value) }))
+        .sort((a, b) => b.fraction - a.fraction);
+
+      for (let i = 0; i < remaining; i += 1) {
+        percentages[order[i % order.length].index] += 1;
+      }
+
+      return percentages;
+    }
+
+    function saveLocalSubmission(record) {
+      const saved = JSON.parse(localStorage.getItem("careerCompassSubmissions") || "[]");
+      const existingIndex = saved.findIndex((entry) => entry.id === record.id);
+      if (existingIndex >= 0) {
+        saved[existingIndex] = record;
+      } else {
+        saved.push(record);
+      }
+      localStorage.setItem("careerCompassSubmissions", JSON.stringify(saved));
+    }
+
+    async function saveSubmission(sorted) {
+      const submittedAt = new Date();
+      const top = sorted.slice(0, 3);
+      const topPercentages = calculateSharePercentages(top);
+      submissionId = submissionId || `submission-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+      const record = {
+        id: submissionId,
+        studentName: studentData.name,
+        class: studentData.className,
+        startedAt: studentData.startedAt,
+        submittedAt: submittedAt.toISOString(),
+        submittedAtDisplay: submittedAt.toLocaleString(),
+        topMatches: top.map(([key, score], index) => ({
+          cluster: clusters[key].title,
+          score,
+          percentage: topPercentages[index]
+        })),
+        scores: Object.fromEntries(sorted.map(([key, score]) => [clusters[key].title, score])),
+        answers: answers.map((answer, index) => ({
+          questionNumber: index + 1,
+          question: questions[index].text,
+          selectedAnswer: questions[index].options[answer][0]
+        }))
+      };
+      saveLocalSubmission(record);
+      lastSavedAt = record.submittedAtDisplay;
+      lastSaveStatus = "saved on this device";
+
+      if (
+        SUPABASE_URL === "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE" ||
+        SUPABASE_PUBLISHABLE_KEY === "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE"
+      ) {
+        console.warn("Supabase is not configured yet. Add your project URL and publishable key.");
+        return;
+      }
+
+      try {
+        const { error } = await supabaseClient
+          .from("career_quiz_responses")
+          .insert({
+            student_name: record.studentName,
+            student_class: record.class,
+            top_matches: record.topMatches,
+            scores: record.scores,
+            answers: record.answers
+          });
+
+        if (error) {
+          throw error;
+        }
+
+        lastSaveStatus = "saved online and backed up on this device";
+      } catch (error) {
+        lastSaveStatus = "saved on this device; online save failed";
+        console.error("Supabase save failed:", error);
+      }
+    }
+
+    async function renderResults() {
+      const sorted = calculateScores();
+      await saveSubmission(sorted);
+      const top = sorted.slice(0, 3);
+      const topPercentages = calculateSharePercentages(top);
+      const max = Math.max(...sorted.map(([, score]) => score), 1);
+      const topCluster = clusters[top[0][0]];
+
+      topbar.classList.add("hidden");
+      quiz.classList.add("hidden");
+      results.classList.add("active");
+      progress.style.width = "100%";
+
+      results.innerHTML = `
+        <div class="result-hero">
+          <div class="result-title">
+            <div class="student-result">
+              <span>Name: ${studentData.name}</span>
+              <span>Class: ${studentData.className}</span>
+            </div>
+            <h2>${topCluster.title}</h2>
+            <p>Your strongest match points toward ${top.map(([key], index) => `${clusters[key].title} - ${topPercentages[index]}%`).join(", ")}. Treat these as starting points for research, conversations, and small experiments.</p>
+          </div>
+          <div class="score-card">
+            ${top.map(([key, score], index) => {
+              const cluster = clusters[key];
+              const width = Math.max(12, topPercentages[index]);
+              return `<div class="score-row">
+                <span><b>${cluster.title}</b><b>${topPercentages[index]}%</b></span>
+                <div class="bar"><i style="--w:${width}%;--c:${cluster.color}"></i></div>
+              </div>`;
+            }).join("")}
+          </div>
+        </div>
+
+        <div class="clusters">
+          ${top.map(([key]) => {
+            const cluster = clusters[key];
+            return `<article class="cluster" style="--cluster-color:${cluster.color}">
+              <span class="icon" aria-hidden="true">${icons[cluster.icon]}</span>
+              <h3>${cluster.title}</h3>
+              <p>${cluster.summary}</p>
+              <ul>${cluster.paths.map(path => `<li>${path}</li>`).join("")}</ul>
+            </article>`;
+          }).join("")}
+        </div>
+
+        <div class="actions">
+          <button class="btn" type="button" id="reviewBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+            Review answers
+          </button>
+          <button class="btn primary" type="button" id="restartBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"></path><path d="M21 3v6h-6"></path></svg>
+            Restart
+          </button>
+        </div>
+      `;
+
+      document.getElementById("restartBtn").addEventListener("click", () => {
+        answers.fill(null);
+        current = 0;
+        studentData = null;
+        submissionId = null;
+        lastSavedAt = "";
+        lastSaveStatus = "saved on this device";
+        studentForm.reset();
+        results.classList.remove("active");
+        topbar.classList.add("hidden");
+        quiz.classList.add("hidden");
+        studentStart.classList.remove("hidden");
+      });
+
+      document.getElementById("reviewBtn").addEventListener("click", () => {
+        current = 0;
+        results.classList.remove("active");
+        topbar.classList.remove("hidden");
+        quiz.classList.remove("hidden");
+        renderQuestion();
+      });
+    }
+
+    studentForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      studentData = {
+        name: studentName.value.trim(),
+        className: studentClass.value.trim(),
+        startedAt: new Date().toISOString()
+      };
+      if (!studentData.name || !studentData.className) return;
+      studentStart.classList.add("hidden");
+      topbar.classList.remove("hidden");
+      quiz.classList.remove("hidden");
+      renderQuestion();
+    });
+
+    optionsEl.addEventListener("click", (event) => {
+      const option = event.target.closest(".option");
+      if (!option) return;
+      answers[current] = Number(option.dataset.index);
+      renderQuestion();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (answers[current] === null) return;
+      if (current === questions.length - 1) {
+        renderResults();
+        return;
+      }
+      current += 1;
+      renderQuestion();
+    });
+
+    backBtn.addEventListener("click", () => {
+      if (current === 0) return;
+      current -= 1;
+      renderQuestion();
+    });
+
+  </script>
+</body>
+</html>
